@@ -49,13 +49,21 @@ p { margin: 0 0 1em; }
   color: var(--basalt);
 }
 .topbar {
-  display: flex; justify-content: space-between; align-items: center;
+  display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px 28px;
   max-width: 1200px; margin: 0 auto;
   padding: 20px var(--gutter);
 }
-.brand { font-family: var(--serif); font-weight: 700; font-size: 1.15rem; margin: 0; }
-.topbar-link { color: var(--basalt); text-decoration: none; font-size: .95rem; padding: 6px 2px; }
-.topbar-link:hover { text-decoration: underline; text-underline-offset: 4px; }
+.brand { font-family: var(--serif); font-weight: 700; font-size: clamp(1.35rem, 2.4vw, 1.6rem); margin: 0; }
+.brand-en {
+  font-family: var(--serif); font-weight: 400; font-size: .7em;
+  color: var(--gravel); letter-spacing: .04em; margin-left: 6px;
+}
+.topbar-link {
+  color: var(--basalt); text-decoration: none;
+  font-size: clamp(1.1rem, 2vw, 1.25rem); font-weight: 700;
+  padding: 8px 4px;
+}
+.topbar-link:hover { color: var(--rafter); text-decoration: underline; text-underline-offset: 5px; }
 
 .hero-inner {
   display: grid; gap: 36px;
