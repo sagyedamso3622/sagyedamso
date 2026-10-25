@@ -1,0 +1,16 @@
+{
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "www.sagyedamso.com" }],
+      "destination": "https://sagyedamso.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "sagyedamso.vercel.app" }],
+      "destination": "https://sagyedamso.com/:path*",
+      "permanent": true
+    }
+  ]
+}

@@ -6,10 +6,10 @@
 
 | 올리는 곳 | 붙여 넣을 링크 |
 |---|---|
-| 네이버 블로그 글·프로필 | https://sagyedamso.vercel.app/?utm_source=naver_blog&utm_medium=blog |
-| 인스타그램 프로필 | https://sagyedamso.vercel.app/?utm_source=instagram&utm_medium=profile |
-| 카카오톡으로 직접 보내기 | https://sagyedamso.vercel.app/?utm_source=kakao&utm_medium=message |
-| 명함·안내문 QR코드 | https://sagyedamso.vercel.app/?utm_source=qr&utm_medium=print |
+| 네이버 블로그 글·프로필 | https://sagyedamso.com/?utm_source=naver_blog&utm_medium=blog |
+| 인스타그램 프로필 | https://sagyedamso.com/?utm_source=instagram&utm_medium=profile |
+| 카카오톡으로 직접 보내기 | https://sagyedamso.com/?utm_source=kakao&utm_medium=message |
+| 명함·안내문 QR코드 | https://sagyedamso.com/?utm_source=qr&utm_medium=print |
 
 새 경로를 만들 때는 `utm_source`(어디서)와 `utm_medium`(어떤 방식)만 바꾸면 된다. 행사·이벤트별로 나누고 싶으면 `&utm_campaign=2026winter`처럼 하나 더 붙인다. 영어·숫자·밑줄만 쓴다.
 
