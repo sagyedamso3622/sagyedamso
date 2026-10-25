@@ -2,15 +2,27 @@
   "cleanUrls": true,
   "redirects": [
     {
-      "source": "/:path*",
+      "source": "/",
       "has": [{ "type": "host", "value": "www.sagyedamso.com" }],
-      "destination": "https://sagyedamso.com/:path*",
+      "destination": "https://sagyedamso.com/",
       "permanent": true
     },
     {
-      "source": "/:path*",
+      "source": "/:path+",
+      "has": [{ "type": "host", "value": "www.sagyedamso.com" }],
+      "destination": "https://sagyedamso.com/:path+",
+      "permanent": true
+    },
+    {
+      "source": "/",
       "has": [{ "type": "host", "value": "sagyedamso.vercel.app" }],
-      "destination": "https://sagyedamso.com/:path*",
+      "destination": "https://sagyedamso.com/",
+      "permanent": true
+    },
+    {
+      "source": "/:path+",
+      "has": [{ "type": "host", "value": "sagyedamso.vercel.app" }],
+      "destination": "https://sagyedamso.com/:path+",
       "permanent": true
     }
   ]
