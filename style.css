@@ -45,47 +45,48 @@ p { margin: 0 0 1em; }
 
 /* ---------- hero ---------- */
 .hero {
-  position: relative;
-  min-height: 92svh;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  color: #fff;
-  background: var(--basalt);
-  overflow: hidden;
-}
-.hero-photo {
-  position: absolute; inset: 0;
-  width: 100%; height: 100%;
-  object-fit: cover; object-position: 50% 55%;
-}
-.hero-shade {
-  position: absolute; inset: 0;
-  background:
-    linear-gradient(to bottom, rgba(26,27,25,.4) 0%, rgba(26,27,25,0) 20%),
-    linear-gradient(to top, rgba(26,27,25,.82) 0%, rgba(26,27,25,.55) 38%, rgba(26,27,25,0) 68%);
+  background: var(--lime);
+  color: var(--basalt);
 }
 .topbar {
-  position: relative; z-index: 1;
   display: flex; justify-content: space-between; align-items: center;
-  padding: 18px var(--gutter);
+  max-width: 1200px; margin: 0 auto;
+  padding: 20px var(--gutter);
 }
 .brand { font-family: var(--serif); font-weight: 700; font-size: 1.15rem; margin: 0; }
-.topbar-link { color: #fff; text-decoration: none; font-size: .95rem; padding: 6px 2px; }
+.topbar-link { color: var(--basalt); text-decoration: none; font-size: .95rem; padding: 6px 2px; }
 .topbar-link:hover { text-decoration: underline; text-underline-offset: 4px; }
 
-.hero-text {
-  position: relative; z-index: 1;
-  padding: 0 var(--gutter) clamp(56px, 9vh, 96px);
-  max-width: 980px;
+.hero-inner {
+  display: grid; gap: 36px;
+  max-width: 1200px; margin: 0 auto;
+  padding: clamp(16px, 4vw, 48px) var(--gutter) clamp(48px, 7vw, 88px);
+}
+@media (min-width: 900px) {
+  .hero-inner {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    align-items: center; gap: clamp(40px, 6vw, 88px);
+    min-height: calc(88svh - 72px);
+  }
 }
 .hero h1 {
-  font-size: clamp(2rem, 6.4vw, 4rem);
-  line-height: 1.22;
+  font-size: clamp(2rem, 4.6vw, 3.4rem);
+  line-height: 1.25;
   letter-spacing: -.02em;
-  text-shadow: 0 1px 18px rgba(0,0,0,.25);
 }
-.hero-sub { margin: 1.1em 0 1.6em; font-size: 1.05rem; max-width: 30em; opacity: .95; }
+.hero-sub { margin: 1.1em 0 1.8em; font-size: 1.05rem; max-width: 30em; color: #4a4b46; }
+
+.hero-figure { margin: 0; }
+.hero-figure img {
+  width: 100%;
+  aspect-ratio: 685 / 600;
+  object-fit: cover;
+  border-radius: 4px;
+  background: var(--rule);
+}
+@media (min-width: 900px) {
+  .hero-figure img { max-height: 74svh; }
+}
 
 .cta-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; }
 .cta-number { font-size: 1.05rem; letter-spacing: .02em; }
@@ -106,9 +107,7 @@ p { margin: 0 0 1em; }
 
 /* 돌담 띠: 페이지에서 한 번만 쓰는 장식 */
 .dolldam {
-  position: relative; z-index: 2;
   display: block; width: 100%; height: clamp(40px, 7.3vw, 88px);
-  margin-top: calc(-0.5 * clamp(40px, 7.3vw, 88px));
 }
 
 /* ---------- sections ---------- */
