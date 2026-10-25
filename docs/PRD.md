@@ -102,6 +102,7 @@
 - 회원가입: 이번엔 아니요
 - 블로그 연동: 네이버 블로그 RSS(https://rss.blog.naver.com/mou2774.xml)를 Vercel `/api/blog` 함수가 읽어 최근 글 3개를 내려 준다. 브라우저가 네이버에서 직접 못 읽기 때문(CORS). 키·로그인 필요 없음. 1시간 캐시. 실패하면 블로그 글 칸만 숨기고 "블로그 바로가기" 링크만 남긴다
 - 유입 경로 추적: UTM 꼬리표(없으면 검색·SNS 주소)를 30일 기억해 문자 문의 끝에 `(경로: …)`로 붙인다. 방문 수는 Vercel Analytics. 링크 모음은 docs/UTM.md
+- 페이지: 첫 화면(/) + 요금(/price), 가까운 곳(/near), 집 안(/inside), 갖춰진 것(/amenities), 마당과 주차(/yard), 손님 이야기(/stories), 블로그(/blog). 본문은 src/pages/, 공통 틀은 build.mjs. 고친 뒤 `node build.mjs` 실행
 - 배포: GitHub 공개 저장소 + Vercel (도메인 sagyedamso.com, 카페24 DNS)
 
 ## 13. 만드는 순서 (클로드가 처음부터 끝까지 한 번에)

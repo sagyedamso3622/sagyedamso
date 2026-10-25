@@ -48,22 +48,63 @@ p { margin: 0 0 1em; }
   background: var(--lime);
   color: var(--basalt);
 }
+/* ---------- 상단 메뉴 ---------- */
+.site-header { background: var(--lime); border-bottom: 1px solid var(--rule); }
+.home .site-header { border-bottom: 0; }
 .topbar {
-  display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px 28px;
+  display: flex; align-items: center; flex-wrap: wrap; gap: 4px 36px;
   max-width: 1200px; margin: 0 auto;
-  padding: 20px var(--gutter);
+  padding: 16px var(--gutter) 10px;
 }
-.brand { font-family: var(--serif); font-weight: 700; font-size: clamp(1.35rem, 2.4vw, 1.6rem); margin: 0; }
+.brand {
+  font-family: var(--serif); font-weight: 700; font-size: clamp(1.35rem, 2.4vw, 1.6rem);
+  margin: 0; color: var(--basalt); text-decoration: none; white-space: nowrap;
+}
 .brand-en {
   font-family: var(--serif); font-weight: 400; font-size: .7em;
   color: var(--gravel); letter-spacing: .04em; margin-left: 6px;
 }
-.topbar-link {
-  color: var(--basalt); text-decoration: none;
-  font-size: clamp(1.1rem, 2vw, 1.25rem); font-weight: 700;
-  padding: 8px 4px;
+.menu {
+  display: flex; gap: 4px 22px;
+  overflow-x: auto; scrollbar-width: none;
+  margin: 0 calc(-1 * var(--gutter)); padding: 0 var(--gutter);
 }
-.topbar-link:hover { color: var(--rafter); text-decoration: underline; text-underline-offset: 5px; }
+.menu::-webkit-scrollbar { display: none; }
+.menu a {
+  flex: none;
+  color: var(--basalt); text-decoration: none;
+  font-size: clamp(1.02rem, 1.6vw, 1.12rem); font-weight: 700;
+  padding: 10px 2px 8px;
+  border-bottom: 2px solid transparent;
+}
+.menu a:hover { color: var(--rafter); }
+.menu a[aria-current="page"] { color: var(--rafter); border-bottom-color: var(--rafter); }
+@media (max-width: 899px) {
+  .topbar { flex-direction: column; align-items: stretch; }
+  .menu { width: calc(100% + 2 * var(--gutter)); }
+}
+@media (min-width: 900px) {
+  .menu { margin: 0; padding: 0; overflow: visible; flex-wrap: wrap; }
+}
+
+/* ---------- 하위 페이지 머리말 ---------- */
+.page-head { padding: clamp(40px, 7vw, 80px) 0 0; }
+.page-head h1 { font-size: clamp(2rem, 5vw, 3rem); letter-spacing: -.02em; line-height: 1.25; }
+.lede { margin: .8em 0 0; font-size: 1.08rem; color: #4a4b46; }
+.page-head + .block { padding-top: clamp(28px, 5vw, 48px); }
+.h3 { font-size: 1.2rem; margin: 2em 0 .7em; }
+
+/* ---------- 첫 화면 둘러보기 ---------- */
+.tour { list-style: none; padding: 0; margin: 0; border-top: 2px solid var(--basalt); }
+.tour li { border-bottom: 1px solid var(--rule); }
+.tour a {
+  display: grid; gap: 2px 24px; padding: 16px 0;
+  text-decoration: none; color: var(--basalt);
+}
+@media (min-width: 640px) { .tour a { grid-template-columns: 8.5em 1fr; align-items: baseline; } }
+.tour .t { font-family: var(--serif); font-weight: 700; font-size: 1.15rem; }
+.tour .d { color: #4a4b46; }
+.tour a:hover .t { color: var(--rafter); text-decoration: underline; text-underline-offset: 4px; }
 
 .hero-inner {
   display: grid; gap: 36px;

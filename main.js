@@ -38,10 +38,19 @@ var visitSource = (function () {
   document.querySelectorAll('.js-sms').forEach(function (a) { a.href = href; });
 })();
 
-// 첫 화면을 지나면 휴대폰 아래에 문의 버튼을 띄운다
+// 휴대폰에서 옆으로 넘기는 메뉴: 지금 보고 있는 페이지 항목이 보이게 맞춘다
+(function () {
+  var menu = document.querySelector('.menu');
+  var cur = menu && menu.querySelector('[aria-current="page"]');
+  if (cur && menu.scrollWidth > menu.clientWidth) {
+    menu.scrollLeft = cur.offsetLeft - (menu.clientWidth - cur.offsetWidth) / 2;
+  }
+})();
+
+// 첫 화면(하위 페이지는 상단 메뉴)을 지나면 휴대폰 아래에 문의 버튼을 띄운다
 (function () {
   var bar = document.getElementById('sticky-cta');
-  var hero = document.querySelector('.hero');
+  var hero = document.querySelector('.hero') || document.querySelector('.site-header');
   var contact = document.querySelector('.contact');
   if (!bar || !hero || !('IntersectionObserver' in window)) return;
   var heroVisible = true, contactVisible = false;
