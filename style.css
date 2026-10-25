@@ -262,3 +262,15 @@ figure img { width: 100%; border-radius: 3px; background: var(--rule); }
 .sticky-cta.on { transform: none; }
 @media (min-width: 720px) { .sticky-cta { display: none; } }
 @media (prefers-reduced-motion: reduce) { .sticky-cta, .btn { transition: none; } }
+
+/* ---------- 기간별 요금표 ---------- */
+.rates { width: 100%; border-collapse: collapse; border-top: 2px solid var(--basalt); }
+.rates caption { text-align: left; font-size: .95rem; color: var(--gravel); padding-bottom: 10px; caption-side: top; }
+.rates th, .rates td { padding: 14px 8px 14px 0; border-bottom: 1px solid var(--rule); text-align: left; vertical-align: baseline; }
+.rates thead th { font-size: .9rem; font-weight: 400; color: var(--gravel); padding-top: 10px; padding-bottom: 10px; }
+.rates tbody th { font-family: var(--serif); font-weight: 700; font-size: 1.08rem; }
+.rates tbody th span { display: block; font-family: var(--sans); font-weight: 400; font-size: .88rem; color: var(--gravel); }
+.rates td { white-space: nowrap; }
+.rates td:nth-child(2) { font-family: var(--serif); font-weight: 700; font-size: 1.15rem; color: var(--rafter); }
+.rates th:last-child, .rates td:last-child { text-align: right; padding-right: 0; }
+.note { margin: 12px 0 8px; color: #4a4b46; }
