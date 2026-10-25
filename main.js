@@ -1,6 +1,39 @@
-// 문자 버튼: 날짜·기간·인원을 미리 적어 둔 문자 창을 연다
+// 유입 경로: 처음 들어온 경로(UTM 또는 검색·SNS 주소)를 30일 동안 기억한다
+var visitSource = (function () {
+  var KEY = 'sgd_source', DAYS = 30;
+  var q = new URLSearchParams(location.search);
+  var clean = function (v) { return String(v || '').replace(/[^\w가-힣.\-]/g, '').slice(0, 40); };
+  var now = {
+    source: clean(q.get('utm_source')),
+    medium: clean(q.get('utm_medium')),
+    campaign: clean(q.get('utm_campaign'))
+  };
+  if (!now.source && document.referrer) {
+    var host = '';
+    try { host = new URL(document.referrer).hostname; } catch (e) {}
+    if (host && host !== location.hostname) {
+      var known = [['naver', 'naver'], ['google', 'google'], ['daum', 'daum'], ['kakao', 'kakao'], ['instagram', 'instagram'], ['facebook', 'facebook'], ['youtube', 'youtube']];
+      now.source = host;
+      for (var i = 0; i < known.length; i++) if (host.indexOf(known[i][0]) > -1) { now.source = known[i][1]; break; }
+      now.medium = 'referral';
+    }
+  }
+  var saved = null;
+  try { saved = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) {}
+  if (saved && Date.now() - saved.at > DAYS * 864e5) saved = null;
+  if (!saved && now.source) {
+    saved = { source: now.source, medium: now.medium, campaign: now.campaign, at: Date.now() };
+    try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch (e) {}
+  }
+  return saved;
+})();
+
+// 문자 버튼: 날짜·기간·인원을 미리 적어 둔 문자 창을 연다. 유입 경로가 있으면 끝에 붙인다
 (function () {
   var body = '사계담소 문의: 원하는 날짜 ○월 ○일부터 ○박, 인원 ○명';
+  if (visitSource) {
+    body += '\n(경로: ' + [visitSource.source, visitSource.medium, visitSource.campaign].filter(Boolean).join('/') + ')';
+  }
   var href = 'sms:010-4416-3622' + (/iPhone|iPad|iPod/.test(navigator.userAgent) ? '&' : '?') + 'body=' + encodeURIComponent(body);
   document.querySelectorAll('.js-sms').forEach(function (a) { a.href = href; });
 })();
