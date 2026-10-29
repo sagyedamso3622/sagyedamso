@@ -163,5 +163,7 @@ writeFileSync(new URL('./robots.txt', import.meta.url), `User-agent: *
 Allow: /
 
 Sitemap: ${SITE}/sitemap.xml
+
+#DaumWebMasterTool:9e48ff763ab7be8b3ddac2ce136e310fcdb706c5950a0a59c76544b06d641472:/muGpe/rLcLTp+f7AlrcFg==
 `);
 console.log('sitemap.xml, robots.txt');
