@@ -117,7 +117,12 @@ document.querySelectorAll('.blog-list').forEach(function (list) {
         for (var i = 1; i <= pages; i++) {
           var b = document.createElement('button');
           b.type = 'button'; b.textContent = i;
-          b.addEventListener('click', function () { show(+this.textContent); });
+          b.addEventListener('click', function () {
+            show(+this.textContent);
+            // 목록 위쪽이 화면 밖으로 올라가 있으면 목록 처음으로 올린다
+            var top = (group || list).getBoundingClientRect().top;
+            if (top < 0) window.scrollBy(0, top - 90);
+          });
           pager.appendChild(b);
         }
         list.parentNode.insertBefore(pager, list.nextSibling);

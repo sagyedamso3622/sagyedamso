@@ -1,6 +1,8 @@
 // 네이버 블로그 RSS에서 최근 글을 골라 돌려준다. 키·로그인 없이 공개 RSS만 읽는다.
-// ?type=food 또는 ?type=sights 를 붙이면 아래 블로그 카테고리 글만 최대 12개 돌려준다.
+// ?type=food 또는 ?type=sights 를 붙이면 아래 블로그 카테고리 글을 모두 돌려준다.
+// RSS에는 최근 50개만 있어서 그보다 오래된 글은 data/blog-archive.json(scripts/blog-archive.mjs 가 만듦)에서 더한다.
 // near-food, near-sights 는 그중 제목·태그에 사계담소 근처 지명이 들어간 글만 고른다.
+const ARCHIVE = require('../data/blog-archive.json');
 const RSS_URL = 'https://rss.blog.naver.com/mou2774.xml';
 const TYPES = {
   food: ['제주의맛집', '제주의 멋진까페'],
@@ -37,9 +39,9 @@ module.exports = async (req, res) => {
     const isNear = (c) => NEAR.some((w) => (pick(c, 'title') + pick(c, 'tag')).includes(w));
     let chunks = xml.split('<item>').slice(1);
     chunks = cats
-      ? chunks.filter((c) => cats.includes(pick(c, 'category')) && (!near || isNear(c))).slice(0, 12)
+      ? chunks.filter((c) => cats.includes(pick(c, 'category')) && (!near || isNear(c)))
       : chunks.slice(0, 3);
-    const items = chunks.map((chunk) => {
+    let items = chunks.map((chunk) => {
       const desc = decode(pick(chunk, 'description'));
       const img = desc.match(/<img[^>]+src="([^"]+)"/);
       const guid = pick(chunk, 'guid');
@@ -50,6 +52,15 @@ module.exports = async (req, res) => {
         image: img ? img[1].replace(/^http:/, 'https:') : '',
       };
     });
+    // RSS에 없는 오래된 글은 미리 모아 둔 목록에서 더한다(근처 글은 제목으로만 고른다)
+    if (cats) {
+      const seen = new Set(items.map((p) => p.link.split('/').pop()));
+      const older = ARCHIVE
+        .filter((p) => p.type === (near ? type.slice(5) : type) && !seen.has(p.logNo))
+        .filter((p) => !near || NEAR.some((w) => p.title.includes(w)))
+        .map((p) => ({ title: p.title, link: `https://blog.naver.com/mou2774/${p.logNo}`, date: p.date, image: p.image }));
+      items = items.concat(older).slice(0, 60);
+    }
     res.setHeader('Cache-Control', 's-maxage=3600, stale-while-revalidate=86400');
     return res.status(200).json({ posts: items });
   } catch (e) {
