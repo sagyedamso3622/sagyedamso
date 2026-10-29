@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>제주먹거리 | 사계담소</title>
+<meta name="description" content="사계담소 주인이 직접 다녀온 제주 맛집과 카페 이야기. 제주여행팁.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="제주먹거리 — 사계담소">
+<meta property="og:description" content="사계담소 주인이 직접 다녀온 제주 맛집과 카페 이야기. 제주여행팁.">
+<meta property="og:image" content="https://sagyedamso.com/images/og.jpg">
+<meta property="og:url" content="https://sagyedamso.com/jeju-food">
+<link rel="canonical" href="https://sagyedamso.com/jeju-food">
+<meta name="naver-site-verification" content="74a3c3c5181327aea21c7b5313f49a7b306d0e83">
+<meta name="google-site-verification" content="6STElPcksTTRS4usHl3cUyyzUYQ0WF5FeCw1yXbTM0w">
+<meta name="theme-color" content="#2f302d">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%232f302d'/%3E%3Cpath d='M6 22c2-3 4-4 6-3s3-3 6-3 4 2 8 1v7H6z' fill='%23efefea'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Gowun+Dodum&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<!-- 이 파일은 build.mjs가 만든다. 내용은 src/pages/jeju-food.html 에서 고친다. -->
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+
+<header class="site-header">
+  <div class="topbar">
+    <a class="brand" href="/">사계담소 <span class="brand-en" lang="en">Sagyedamso</span></a>
+    <nav class="menu" aria-label="사계담소 둘러보기">
+      <a href="/price">요금</a>
+      <a href="/near">가까운 곳</a>
+      <a href="/inside">집 안</a>
+      <a href="/amenities">갖춰진 것</a>
+      <a href="/yard">마당과 주차</a>
+      <a href="/stories">손님 이야기</a>
+      <div class="menu-group" data-group="제주여행팁">
+        <a href="/jeju-food" aria-current="page">제주여행팁</a>
+        <div class="submenu"><a href="/jeju-food" aria-current="page">제주먹거리</a><a href="/jeju-sights">제주볼거리</a></div>
+      </div>
+      <a href="/blog">블로그</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <div class="page-head">
+    <div class="prose">
+      <h1>제주먹거리</h1>
+      <p class="lede">주인이 직접 다녀온 제주 맛집과 카페입니다.</p>
+    </div>
+  </div>
+  <nav class="subtabs prose" aria-label="제주여행팁">
+    <a href="/jeju-food" aria-current="page">제주먹거리</a>
+    <a href="/jeju-sights">제주볼거리</a>
+  </nav>
+  <section class="block" aria-label="제주먹거리 블로그 글">
+  <ul class="blog-list" id="blog-list" data-type="food" hidden></ul>
+  <div class="prose">
+    <a class="text-link" href="https://blog.naver.com/mou2774" target="_blank" rel="noopener">블로그에서 더 보기</a>
+  </div>
+</section>
+
+  <section class="block contact" aria-labelledby="contact-h">
+    <div class="prose">
+      <h2 id="contact-h">문의는 문자로 받습니다</h2>
+      <p>원하시는 날짜와 머무는 기간, 인원을 문자로 보내 주시면 확인 후 답장 드립니다.</p>
+      <div class="cta-row">
+        <a class="btn btn-dark js-sms" href="sms:010-4416-3622">문자로 문의하기</a>
+        <span class="cta-number">010-4416-3622</span>
+      </div>
+      <dl class="facts address">
+        <div><dt>주소</dt><dd>제주특별자치도 서귀포시 안덕면 사계남로21번길 25 <a class="text-link" href="https://map.naver.com/p/search/%EC%84%9C%EA%B7%80%ED%8F%AC%EC%8B%9C%20%EC%95%88%EB%8D%95%EB%A9%B4%20%EC%82%AC%EA%B3%84%EB%82%A8%EB%A1%9C21%EB%B2%88%EA%B8%B8%2025" target="_blank" rel="noopener">네이버 지도에서 보기</a></dd></div>
+      </dl>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="prose">
+    <p class="brand">사계담소</p>
+    <p>제주특별자치도 서귀포시 안덕면 사계남로21번길 25<br>문자 010-4416-3622<br>사업자등록번호 625-21-02457 (임대업)</p>
+    <p><a href="https://blog.naver.com/mou2774" target="_blank" rel="noopener">네이버 블로그</a></p>
+  </div>
+</footer>
+
+<div class="sticky-cta" id="sticky-cta" aria-hidden="true">
+  <a class="btn btn-lamp js-sms" href="sms:010-4416-3622" tabindex="-1">문자로 문의하기</a>
+</div>
+
+<script src="/main.js" defer></script>
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>

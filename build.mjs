@@ -26,6 +26,12 @@ const pages = [
   { slug: 'stories', path: '/stories', label: '손님 이야기', heading: '머물다 간 손님 이야기',
     lede: '주인이 블로그에 남긴 손님들의 이야기입니다.',
     description: '사계담소에 머물다 간 손님들의 이야기.' },
+  { slug: 'jeju-food', path: '/jeju-food', label: '제주먹거리', group: '제주여행팁', heading: '제주먹거리',
+    lede: '주인이 직접 다녀온 제주 맛집과 카페입니다.',
+    description: '사계담소 주인이 직접 다녀온 제주 맛집과 카페 이야기. 제주여행팁.' },
+  { slug: 'jeju-sights', path: '/jeju-sights', label: '제주볼거리', group: '제주여행팁', heading: '제주볼거리',
+    lede: '주인이 직접 걸어 본 제주의 바다, 오름, 숲, 명소입니다.',
+    description: '사계담소 주인이 직접 다녀온 제주의 명소, 오름, 숲, 올레길, 비 오는 날 갈 만한 곳. 제주여행팁.' },
   { slug: 'blog', path: '/blog', label: '블로그', heading: '블로그 새 글',
     lede: '사계담소 주변의 바다, 오름, 맛집 이야기를 블로그에 씁니다.',
     description: '사계담소 네이버 블로그 새 글: 제주 서쪽의 바다, 오름, 맛집 이야기.' },
@@ -56,14 +62,26 @@ const jsonLd = `<script type="application/ld+json">
 }
 </script>`;
 
+// group이 같은 페이지는 메뉴에 묶음 이름 하나로 나오고(첫 페이지로 연결), 컴퓨터 화면에서는 아래로 하위 메뉴가 펼쳐진다
+const link = (p, current) => `<a href="${p.path}"${p.slug === current ? ' aria-current="page"' : ''}>${p.label}</a>`;
+
 function nav(current) {
-  const links = pages.filter((p) => p.label).map((p) =>
-    `<a href="${p.path}"${p.slug === current ? ' aria-current="page"' : ''}>${p.label}</a>`).join('\n      ');
+  const links = [];
+  for (const p of pages.filter((p) => p.label)) {
+    if (!p.group) { links.push(link(p, current)); continue; }
+    if (links.some((l) => l.includes(`data-group="${p.group}"`))) continue;
+    const members = pages.filter((m) => m.group === p.group);
+    const on = members.some((m) => m.slug === current);
+    links.push(`<div class="menu-group" data-group="${p.group}">
+        <a href="${p.path}"${on ? ' aria-current="page"' : ''}>${p.group}</a>
+        <div class="submenu">${members.map((m) => link(m, current)).join('')}</div>
+      </div>`);
+  }
   return `<header class="site-header">
   <div class="topbar">
     <a class="brand" href="/">사계담소 <span class="brand-en" lang="en">Sagyedamso</span></a>
     <nav class="menu" aria-label="사계담소 둘러보기">
-      ${links}
+      ${links.join('\n      ')}
     </nav>
   </div>
 </header>`;
@@ -79,7 +97,10 @@ function render(page) {
       <p class="lede">${page.lede}</p>
     </div>
   </div>
-  `;
+  ${page.group ? `<nav class="subtabs prose" aria-label="${page.group}">
+    ${pages.filter((m) => m.group === page.group).map((m) => link(m, page.slug)).join('\n    ')}
+  </nav>
+  ` : ''}`;
   return `<!doctype html>
 <html lang="ko">
 <head>

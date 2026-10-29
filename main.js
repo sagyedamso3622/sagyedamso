@@ -42,6 +42,7 @@ var visitSource = (function () {
 (function () {
   var menu = document.querySelector('.menu');
   var cur = menu && menu.querySelector('[aria-current="page"]');
+  if (cur && cur.parentNode.classList.contains('menu-group')) cur = cur.parentNode;
   if (cur && menu.scrollWidth > menu.clientWidth) {
     menu.scrollLeft = cur.offsetLeft - (menu.clientWidth - cur.offsetWidth) / 2;
   }
@@ -64,16 +65,18 @@ var visitSource = (function () {
   if (contact) new IntersectionObserver(function (e) { contactVisible = e[0].isIntersecting; update(); }).observe(contact);
 })();
 
-// 블로그 새 글 3개: /api/blog 가 네이버 블로그 RSS를 읽어 준다. 실패하면 칸을 숨긴 채 링크만 남긴다
+// 블로그 글: /api/blog 가 네이버 블로그 RSS를 읽어 준다(새 글 3개, 제주여행팁은 data-type 카테고리 글).
+// 실패하면 칸을 숨긴 채 링크만 남긴다
 (function () {
   var list = document.getElementById('blog-list');
   if (!list || !window.fetch) return;
-  fetch('/api/blog')
+  var type = list.getAttribute('data-type');
+  fetch('/api/blog' + (type ? '?type=' + type : ''))
     .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
     .then(function (data) {
       var posts = (data && data.posts) || [];
       if (!posts.length) return;
-      posts.slice(0, 3).forEach(function (p) {
+      posts.slice(0, type ? 12 : 3).forEach(function (p) {
         var li = document.createElement('li');
         var a = document.createElement('a');
         a.href = p.link; a.target = '_blank'; a.rel = 'noopener';

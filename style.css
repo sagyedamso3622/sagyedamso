@@ -81,6 +81,28 @@ p { margin: 0 0 1em; }
 }
 .menu a:hover { color: var(--rafter); }
 .menu a[aria-current="page"] { color: var(--rafter); border-bottom-color: var(--rafter); }
+/* 제주여행팁 묶음: 휴대폰은 이름만 보이고, 컴퓨터는 마우스를 올리면 하위 메뉴가 펼쳐진다 */
+.menu-group { flex: none; position: relative; display: flex; }
+.submenu { display: none; }
+@media (min-width: 900px) {
+  .submenu {
+    position: absolute; top: 100%; left: -14px; z-index: 30;
+    flex-direction: column; min-width: 150px; padding: 6px 0;
+    background: var(--paper); border: 1px solid var(--rule); border-radius: 4px;
+    box-shadow: 0 6px 18px rgba(47, 48, 45, .12);
+  }
+  .menu-group:hover .submenu, .menu-group:focus-within .submenu { display: flex; }
+  .submenu a { padding: 8px 14px; border-bottom: 0; font-size: 1rem; }
+  .submenu a[aria-current="page"] { background: var(--lime); }
+}
+/* 하위 페이지 안의 묶음 탭 (제주먹거리 | 제주볼거리) */
+nav.subtabs { display: flex; gap: 8px; margin-top: 24px; }
+.subtabs a {
+  padding: 8px 18px; border: 1px solid var(--basalt); border-radius: 999px;
+  color: var(--basalt); text-decoration: none; font-weight: 700;
+}
+.subtabs a[aria-current="page"] { background: var(--basalt); color: var(--paper); }
+.subtabs + .block { padding-top: clamp(12px, 3vw, 24px); }
 @media (max-width: 899px) {
   .topbar { flex-direction: column; align-items: stretch; }
   .menu { width: calc(100% + 2 * var(--gutter)); }
