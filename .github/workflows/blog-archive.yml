@@ -1,0 +1,32 @@
+# 매일 새벽 4시(한국 시간) 네이버 블로그 전체 글 목록을 다시 모아 data/blog-archive.json 을 갱신한다.
+# 바뀐 게 있을 때만 커밋하고, 커밋되면 Vercel이 사이트를 다시 올린다.
+name: 블로그 글 목록 갱신
+
+on:
+  schedule:
+    - cron: '0 19 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/blog-archive.mjs
+      - name: 바뀐 게 있으면 커밋
+        run: |
+          if git diff --quiet data/blog-archive.json; then
+            echo "바뀐 글 없음"
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add data/blog-archive.json
+            git commit -m "블로그 글 목록 자동 갱신"
+            git push
+          fi

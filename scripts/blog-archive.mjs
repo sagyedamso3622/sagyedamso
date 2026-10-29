@@ -1,7 +1,8 @@
 // 블로그 전체 글 목록 만들기: 네이버 블로그 RSS에는 최근 50개만 있어서, 그보다 오래된 먹거리·볼거리 글은
 // 이 파일이 data/blog-archive.json 에 모아 둔다(제목·날짜·종류·대표 사진). /api/blog 가 RSS와 합쳐 보여 준다.
-// 블로그 글이 많이 쌓이면 가끔 `node scripts/blog-archive.mjs` 를 실행하고 결과를 커밋한다.
-import { writeFileSync } from 'node:fs';
+// GitHub Actions(.github/workflows/blog-archive.yml)가 매일 새벽 실행하고, 바뀐 게 있으면 커밋한다.
+// 손으로 돌릴 때는 `node scripts/blog-archive.mjs`.
+import { readFileSync, writeFileSync } from 'node:fs';
 
 const BLOG = 'mou2774';
 // 블로그 카테고리 번호 → 사이트 종류. 번호는 블로그 관리 화면의 카테고리 순서와 무관하게 고정된 값이다.
@@ -40,9 +41,15 @@ const posts = all
     type: TYPE_BY_CATEGORY[x.categoryNo],
   }));
 
+// 이미 모아 둔 사진은 다시 받지 않는다
+const OUT = new URL('../data/blog-archive.json', import.meta.url);
+let saved = [];
+try { saved = JSON.parse(readFileSync(OUT, 'utf8')); } catch {}
+for (const p of posts) p.image = saved.find((s) => s.logNo === p.logNo)?.image || '';
+
 // 한꺼번에 많이 부르면 네이버가 빈 화면을 주므로 하나씩, 실패한 글은 쉬었다가 다시 부른다
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
-for (const p of posts) {
+for (const p of posts.filter((p) => !p.image)) {
   for (let tryNo = 0; tryNo < 4 && !p.image; tryNo++) {
     if (tryNo) await wait(1500 * tryNo);
     p.image = await coverImage(p.logNo).catch(() => '');
@@ -50,5 +57,7 @@ for (const p of posts) {
   await wait(250);
 }
 
-writeFileSync(new URL('../data/blog-archive.json', import.meta.url), JSON.stringify(posts, null, 1) + '\n');
+// 목록을 하나도 못 받았으면 기존 파일을 지우지 않는다
+if (!posts.length) throw new Error('블로그 글 목록을 받지 못했어요.');
+writeFileSync(OUT, JSON.stringify(posts, null, 1) + '\n');
 console.log(`전체 ${all.length}개 중 먹거리 ${posts.filter((p) => p.type === 'food').length}개, 볼거리 ${posts.filter((p) => p.type === 'sights').length}개`);
