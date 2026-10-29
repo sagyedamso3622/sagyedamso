@@ -61,8 +61,10 @@ p { margin: 0 0 1em; }
   margin: 0; color: var(--basalt); text-decoration: none; white-space: nowrap;
 }
 .brand-en {
-  font-family: var(--serif); font-weight: 400; font-size: .7em;
-  color: var(--gravel); letter-spacing: .04em; margin-left: 6px;
+  font-family: var(--serif); font-weight: 700; font-size: .62em;
+  color: var(--paper); background: var(--basalt); letter-spacing: .05em;
+  margin-left: 8px; padding: .15em .6em; border-radius: 4px;
+  vertical-align: .2em;
 }
 .menu {
   display: flex; gap: 4px 22px;
