@@ -255,6 +255,13 @@ figure img { width: 100%; border-radius: 3px; background: var(--rule); }
 .blog-list img { aspect-ratio: 4 / 3; object-fit: cover; width: 100%; border-radius: 3px; background: var(--rule); }
 .blog-list .t { display: block; font-family: var(--serif); font-weight: 700; line-height: 1.45; margin-top: 10px; }
 .blog-list .d { display: block; font-size: .88rem; color: var(--gravel); margin-top: 4px; }
+/* 주변 볼거리의 짧은 목록: 휴대폰에서는 작은 사진 옆에 제목 */
+@media (max-width: 719px) {
+  .blog-list[data-limit] { gap: 14px; margin: 16px auto; }
+  .blog-list[data-limit] a { display: grid; grid-template-columns: 104px 1fr; column-gap: 14px; align-items: start; }
+  .blog-list[data-limit] img { grid-row: span 2; aspect-ratio: 1; }
+  .blog-list[data-limit] .t { margin-top: 0; font-size: .98rem; }
+}
 .blog-list a:hover .t { color: var(--rafter); text-decoration: underline; text-underline-offset: 4px; }
 
 .text-link { color: var(--rafter); text-underline-offset: 4px; }
