@@ -149,3 +149,17 @@ for (const page of pages) {
   writeFileSync(new URL(`./${page.slug}.html`, import.meta.url), render(page));
   console.log(`${page.slug}.html`);
 }
+
+// 검색엔진(네이버 서치어드바이저 등)에 알려 줄 사이트맵과 robots.txt
+const today = new Date().toISOString().slice(0, 10);
+writeFileSync(new URL('./sitemap.xml', import.meta.url), `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${pages.map((p) => `  <url><loc>${SITE}${p.path}</loc><lastmod>${today}</lastmod></url>`).join('\n')}
+</urlset>
+`);
+writeFileSync(new URL('./robots.txt', import.meta.url), `User-agent: *
+Allow: /
+
+Sitemap: ${SITE}/sitemap.xml
+`);
+console.log('sitemap.xml, robots.txt');
