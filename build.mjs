@@ -11,7 +11,7 @@ const pages = [
   { slug: 'price', path: '/price', label: '요금', heading: '요금과 이용 안내',
     lede: '일주일살이부터 한달살이까지, 머무는 기간에 따라 요금이 다릅니다.',
     description: '사계담소 요금(2인 기준, 공과금 별도): 일주일살이 80만 원, 이주일살이 140만 원, 삼주일살이 170만 원, 한달살이 200만 원. 보증금, 추가 인원, 불멍 화로·바비큐 그릴, 환불 규정.' },
-  { slug: 'near', path: '/near', label: '가까운 곳', heading: '가까운 곳',
+  { slug: 'near', path: '/near', label: '주변 볼거리', heading: '주변 볼거리',
     lede: '산방산 자락의 돌담집에서 사계바다까지 걸어서 15분입니다.',
     description: '사계담소 위치와 주변: 사계바닷가 걸어서 15분, 용머리해안 차로 3분, 송악산 5분, 운진항 10분.' },
   { slug: 'inside', path: '/inside', label: '집 안', heading: '집 안',
