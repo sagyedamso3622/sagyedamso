@@ -255,12 +255,21 @@ figure img { width: 100%; border-radius: 3px; background: var(--rule); }
 .blog-list img { aspect-ratio: 4 / 3; object-fit: cover; width: 100%; border-radius: 3px; background: var(--rule); }
 .blog-list .t { display: block; font-family: var(--serif); font-weight: 700; line-height: 1.45; margin-top: 10px; }
 .blog-list .d { display: block; font-size: .88rem; color: var(--gravel); margin-top: 4px; }
+/* 블로그 목록 아래 페이지 번호 (1 2 3) */
+.pager { display: flex; justify-content: center; gap: 8px; margin: -4px auto 8px; }
+.pager button {
+  width: 40px; height: 40px; border-radius: 50%;
+  border: 1px solid var(--basalt); background: transparent; color: var(--basalt);
+  font: 700 1rem var(--sans); cursor: pointer;
+}
+.pager button:hover { border-color: var(--rafter); color: var(--rafter); }
+.pager button.on { background: var(--basalt); border-color: var(--basalt); color: var(--paper); }
 /* 주변 볼거리의 짧은 목록: 휴대폰에서는 작은 사진 옆에 제목 */
 @media (max-width: 719px) {
-  .blog-list[data-limit] { gap: 14px; margin: 16px auto; }
-  .blog-list[data-limit] a { display: grid; grid-template-columns: 104px 1fr; column-gap: 14px; align-items: start; }
-  .blog-list[data-limit] img { grid-row: span 2; aspect-ratio: 1; }
-  .blog-list[data-limit] .t { margin-top: 0; font-size: .98rem; }
+  .blog-list[data-per-page] { gap: 14px; margin: 16px auto; }
+  .blog-list[data-per-page] a { display: grid; grid-template-columns: 104px 1fr; column-gap: 14px; align-items: start; }
+  .blog-list[data-per-page] img { grid-row: span 2; aspect-ratio: 1; }
+  .blog-list[data-per-page] .t { margin-top: 0; font-size: .98rem; }
 }
 .blog-list a:hover .t { color: var(--rafter); text-decoration: underline; text-underline-offset: 4px; }
 

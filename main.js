@@ -66,32 +66,63 @@ var visitSource = (function () {
 })();
 
 // 블로그 글: /api/blog 가 네이버 블로그 RSS를 읽어 준다(새 글 3개, 제주여행팁·주변 볼거리는 data-type 글).
-// data-limit 로 보여 줄 개수를 정한다. 실패하면 칸을 숨긴 채 링크만 남긴다
+// data-per-page 가 있으면 그 개수씩 나눠 보여 주고 아래에 1·2·3 페이지 번호를 단다.
+// 실패하면 칸을 숨긴 채 링크만 남긴다
 document.querySelectorAll('.blog-list').forEach(function (list) {
   if (!window.fetch) return;
   var type = list.getAttribute('data-type');
-  var limit = +list.getAttribute('data-limit') || (type ? 12 : 3);
+  var perPage = +list.getAttribute('data-per-page') || (type ? 12 : 3);
   var group = list.closest('.blog-group');
+
+  function item(p) {
+    var li = document.createElement('li');
+    var a = document.createElement('a');
+    a.href = p.link; a.target = '_blank'; a.rel = 'noopener';
+    if (p.image) {
+      var img = document.createElement('img');
+      img.src = p.image; img.alt = ''; img.loading = 'lazy'; img.referrerPolicy = 'no-referrer';
+      img.onerror = function () { img.remove(); };
+      a.appendChild(img);
+    }
+    var t = document.createElement('span'); t.className = 't'; t.textContent = p.title;
+    var d = document.createElement('span'); d.className = 'd'; d.textContent = p.date || '';
+    a.appendChild(t); a.appendChild(d);
+    li.appendChild(a);
+    return li;
+  }
+
   fetch('/api/blog' + (type ? '?type=' + type : ''))
     .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
     .then(function (data) {
       var posts = (data && data.posts) || [];
       if (!posts.length) return;
-      posts.slice(0, limit).forEach(function (p) {
-        var li = document.createElement('li');
-        var a = document.createElement('a');
-        a.href = p.link; a.target = '_blank'; a.rel = 'noopener';
-        if (p.image) {
-          var img = document.createElement('img');
-          img.src = p.image; img.alt = ''; img.loading = 'lazy'; img.referrerPolicy = 'no-referrer';
-          img.onerror = function () { img.remove(); };
-          a.appendChild(img);
+      var pages = list.hasAttribute('data-per-page') ? Math.ceil(posts.length / perPage) : 1;
+      var pager = null;
+
+      function show(n) {
+        list.textContent = '';
+        posts.slice((n - 1) * perPage, n * perPage).forEach(function (p) { list.appendChild(item(p)); });
+        if (!pager) return;
+        pager.querySelectorAll('button').forEach(function (b) {
+          var on = +b.textContent === n;
+          b.classList.toggle('on', on);
+          if (on) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current');
+        });
+      }
+
+      if (pages > 1) {
+        pager = document.createElement('nav');
+        pager.className = 'pager';
+        pager.setAttribute('aria-label', '페이지');
+        for (var i = 1; i <= pages; i++) {
+          var b = document.createElement('button');
+          b.type = 'button'; b.textContent = i;
+          b.addEventListener('click', function () { show(+this.textContent); });
+          pager.appendChild(b);
         }
-        var t = document.createElement('span'); t.className = 't'; t.textContent = p.title;
-        var d = document.createElement('span'); d.className = 'd'; d.textContent = p.date || '';
-        a.appendChild(t); a.appendChild(d);
-        li.appendChild(a); list.appendChild(li);
-      });
+        list.parentNode.insertBefore(pager, list.nextSibling);
+      }
+      show(1);
       list.hidden = false;
       if (group) group.hidden = false;
     })
