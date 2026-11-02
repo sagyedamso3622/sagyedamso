@@ -1,4 +1,4 @@
-// 블로그 전체 글 목록 만들기: 네이버 블로그 RSS에는 최근 50개만 있어서, 그보다 오래된 먹거리·볼거리 글은
+// 블로그 전체 글 목록 만들기: 네이버 블로그 RSS에는 최근 50개만 있어서, 그보다 오래된 먹거리·볼거리·제주살이 글은
 // 이 파일이 data/blog-archive.json 에 모아 둔다(제목·날짜·종류·대표 사진). /api/blog 가 RSS와 합쳐 보여 준다.
 // GitHub Actions(.github/workflows/blog-archive.yml)가 매일 새벽 실행하고, 바뀐 게 있으면 커밋한다.
 // 손으로 돌릴 때는 `node scripts/blog-archive.mjs`.
@@ -12,6 +12,7 @@ const TYPE_BY_CATEGORY = {
   14: 'sights', 16: 'sights', 18: 'sights',     // 억새명소, 제주의바다·해수욕장, 제주의 올레길
   11: 'sights', 26: 'sights',                   // 제주의 숲·힐링, 비올때찾는 실내갈만한곳
   13: 'sights', 24: 'sights', 25: 'sights',     // 유채꽃·메밀꽃·갯무꽃 같은 꽃 명소
+  19: 'life',                                   // 제주살아보기
 };
 const UA = { 'User-Agent': 'Mozilla/5.0 (sagyedamso site)' };
 
@@ -60,4 +61,4 @@ for (const p of posts.filter((p) => !p.image)) {
 // 목록을 하나도 못 받았으면 기존 파일을 지우지 않는다
 if (!posts.length) throw new Error('블로그 글 목록을 받지 못했어요.');
 writeFileSync(OUT, JSON.stringify(posts, null, 1) + '\n');
-console.log(`전체 ${all.length}개 중 먹거리 ${posts.filter((p) => p.type === 'food').length}개, 볼거리 ${posts.filter((p) => p.type === 'sights').length}개`);
+console.log(`전체 ${all.length}개 중 먹거리 ${posts.filter((p) => p.type === 'food').length}개, 볼거리 ${posts.filter((p) => p.type === 'sights').length}개, 제주살이 ${posts.filter((p) => p.type === 'life').length}개`);
