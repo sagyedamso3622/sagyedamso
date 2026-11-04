@@ -18,10 +18,11 @@ const TYPE_BY_CATEGORY = {
 // khj2774 는 카테고리로 나눌 수 없어 제목으로 고른다(제주 글이 아니면 넣지 않음)
 const OTHER_BLOG = 'khj2774';
 const JEJU = /제주|서귀포|애월|성산|우도|한림|협재|금능|함덕|중문|사계해|산방|모슬포|한라봉/;
-const SKIP = /제습기|청소/;
+// 제주에 살면서 도움이 되는 생활 팁(청소·습기·쓰레기·이사 등)은 제주살이로 넣는다(사용자 요청 2026-11-04)
+const LIFE = /살아보기|제주살이|한달살이|일년살이|살기|생활|꿀팁|팁|청소|제습|습기|곰팡이|쓰레기|분리수거|이사|정착|전입|탐나는전|지역화폐|난방|보일러|택배|병원|약국/;
 function typeByTitle(title) {
-  if (!JEJU.test(title) || SKIP.test(title)) return '';
-  if (/살아보기|제주살이/.test(title)) return 'life';
+  if (!JEJU.test(title)) return '';
+  if (LIFE.test(title)) return 'life';
   if (/맛집|식당|횟집|고깃집|해물탕|칼국수|정식|카페|까페/.test(title)) return 'food';
   return 'sights';
 }
